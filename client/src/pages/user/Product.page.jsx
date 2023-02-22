@@ -17,10 +17,9 @@ function ProductPage() {
 
   const indexOfLastProduct = currentPage * dataPerPage;
   const indexOfFirstProduct = indexOfLastProduct - dataPerPage;
-  const currentProduct = Array.isArray(products) ? products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  ) : [];
+  const currentProduct = Array.isArray(products)
+    ? products.slice(indexOfFirstProduct, indexOfLastProduct)
+    : [];
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
@@ -31,10 +30,6 @@ function ProductPage() {
         products={currentProduct}
       />
       <PaginationComponent
-        isLoading={isLoading}
-        isError={isError}
-        message={message}
-        products={products}
         dataPerPage={dataPerPage}
         totalProduct={products ? products.length : null}
         paginate={paginate}

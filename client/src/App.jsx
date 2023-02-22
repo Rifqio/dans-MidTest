@@ -6,7 +6,7 @@ import ProductPage from "./pages/user/Product.page";
 import SidebarComponent from "./components/Sidebar.component";
 import ProductDetail from "./pages/user/ProductDetail.page";
 import AuthGuard from "./pages/guard/AuthGuard";
-import UnauthenticatedGuard from './pages/guard/UnauthenticatedGuard'
+import UnauthenticatedGuard from "./pages/guard/UnauthenticatedGuard";
 
 function App() {
   return (

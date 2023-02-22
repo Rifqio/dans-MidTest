@@ -10,7 +10,14 @@ export const register = createAsyncThunk(
       const data = await response.data.data;
       return data;
     } catch (error) {
-      rejectWithValue(error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(error.message);
+      return rejectWithValue(message);
     }
   }
 );
@@ -25,7 +32,13 @@ export const login = createAsyncThunk(
       localStorage.setItem("token", data);
       return data;
     } catch (error) {
-      rejectWithValue(error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return rejectWithValue(message);
     }
   }
 );
@@ -63,8 +76,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.isSuccess = false;
-      state.user = action.payload;
+      state.isSuccess = true;
     });
     builder.addCase(register.rejected, (state, action) => {
       state.isLoading = false;
@@ -87,8 +99,7 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload;
       state.user = null;
-    })
-   
+    });
   },
 });
 

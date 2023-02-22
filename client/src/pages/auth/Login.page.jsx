@@ -16,10 +16,10 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/slice/authSlice";
+import { login, reset } from "../../redux/slice/authSlice";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -31,11 +31,15 @@ function LoginPage() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-  const payload = {email, password}
+  const payload = { email, password };
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(login(payload));
     // navigate("/");
+  };
+
+  const handleLink = () => {
+    dispatch(reset());
   };
 
   return (
@@ -43,12 +47,23 @@ function LoginPage() {
       <Card>
         <CardBody>
           <Center>
+            {isSuccess && (
+              <Text color="teal">User Registered Successfully</Text>
+            )}
+          </Center>
+          <Center>
             <CardHeader fontSize={24} fontWeight={"medium"}>
               Please Login To Continue
             </CardHeader>
-            {isError && <p>{message}</p>}
           </Center>
           <form onSubmit={handleSubmit}>
+            <Center>
+              {isError && (
+                <Text color="tomato" fontWeight="semibold">
+                  {message}
+                </Text>
+              )}
+            </Center>
             <FormControl my={4}>
               <FormLabel>Email address</FormLabel>
               <Input
@@ -74,7 +89,8 @@ function LoginPage() {
             </FormControl>
             <Box display={"flex"} justifyContent={"space-between"}>
               <Text>
-                Don't have an account? <Link to="/register"> Register</Link>
+                Don't have an account?{" "}
+                <Link onClick={handleLink} to='/register'> Register</Link>
               </Text>
               <Button
                 isLoading={isLoading}
