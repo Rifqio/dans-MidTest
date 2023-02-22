@@ -1,6 +1,4 @@
-import { Center } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { instance } from "../../lib/instance";
 import ProductComponent from "./components/Product.component";
 import PaginationComponent from "./components/Pagination.component";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,19 +12,19 @@ function ProductPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage, setDataPerPage] = useState(5);
   const getData = async () => {
-    dispatch(getProducts());
+    await dispatch(getProducts());
     console.log(products);
   };
   useEffect(() => {
     getData();
   }, []);
-  console.log(products);
+
   const indexOfLastProduct = currentPage * dataPerPage;
   const indexOfFirstProduct = indexOfLastProduct - dataPerPage;
-  const currentProduct = products.slice(
+  const currentProduct = products ? products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
-  );
+  ) : [];
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
@@ -37,6 +35,10 @@ function ProductPage() {
         products={currentProduct}
       />
       <PaginationComponent
+        isLoading={isLoading}
+        isError={isError}
+        message={message}
+        products={products}
         dataPerPage={dataPerPage}
         totalProduct={products.length}
         paginate={paginate}
