@@ -19,23 +19,25 @@ function PaginationComponent({
   if (isError) {
     return <Text>{message}</Text>;
   }
-  if (products) {
-    return (
-      <>
-        <Center>
-          <Flex>
-            {pageNumbers.map((number) => (
-              <div key={number}>
-                <Button mx={"1"} onClick={() => paginate(number)}>
-                  {number}
-                </Button>
-              </div>
-            ))}
-          </Flex>
-        </Center>
-      </>
-    );
+  if (!products || products.length === 0) {
+    return <Text>No products found</Text>;
   }
+
+  return (
+    <>
+      <Center>
+        <Flex>
+          {pageNumbers.map((number) => (
+            <div key={number}>
+              <Button mx={"1"} onClick={() => paginate(number)}>
+                {number}
+              </Button>
+            </div>
+          ))}
+        </Flex>
+      </Center>
+    </>
+  );
 }
 
 export default PaginationComponent;

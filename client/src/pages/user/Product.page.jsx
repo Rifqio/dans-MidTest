@@ -11,17 +11,13 @@ function ProductPage() {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage, setDataPerPage] = useState(5);
-  const getData = async () => {
-    await dispatch(getProducts());
-    console.log(products);
-  };
   useEffect(() => {
-    getData();
+    dispatch(getProducts());
   }, []);
 
   const indexOfLastProduct = currentPage * dataPerPage;
   const indexOfFirstProduct = indexOfLastProduct - dataPerPage;
-  const currentProduct = products ? products.slice(
+  const currentProduct = Array.isArray(products) ? products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   ) : [];
@@ -40,7 +36,7 @@ function ProductPage() {
         message={message}
         products={products}
         dataPerPage={dataPerPage}
-        totalProduct={products.length}
+        totalProduct={products ? products.length : null}
         paginate={paginate}
       />
     </>

@@ -18,15 +18,13 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
-  Text,
-  Card,
-  CardBody,
+  Text
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react'
+import { useEffect } from "react";
 import { getMe } from "../redux/slice/profileSlice";
 
 function SidebarComponent() {
@@ -37,6 +35,9 @@ function SidebarComponent() {
   useEffect(() => {
     dispatch(getMe());
   }, []);
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <>
       <Box px={6}>
@@ -70,13 +71,11 @@ function SidebarComponent() {
                   </Center>
                   <br />
                   <Center>
-                    <p>{profile.name}</p>
+                    <p>{profile.email}</p>
                   </Center>
                   <br />
                   <MenuDivider />
-                  <MenuItem>Your Servers</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
-                  <MenuItem onClick={logout}>Logout</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </Stack>
@@ -84,8 +83,8 @@ function SidebarComponent() {
         </Flex>
         <Drawer
           isOpen={isOpen}
-          placement="left"
           onClose={onClose}
+          placement="left"
           finalFocusRef={btnRef}
         >
           <DrawerOverlay />

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { instance } from "../../lib/instance";
 import {
   ButtonGroup,
   Card,
@@ -27,7 +26,7 @@ function ProductDetail() {
     dispatch(getProductById(id));
     console.log(products);
   }, []);
-  if (isLoading || products.length === 0) {
+  if (isLoading || !products) {
     return <Text>Loading....</Text>;
   }
   if (isError) {
@@ -39,7 +38,7 @@ function ProductDetail() {
         <Card maxW="sm">
           <CardBody>
             <Image
-              src={products.images[0]}
+              src={products.thumbnail}
               alt="Green double couch with wooden legs"
               borderRadius="lg"
             />
