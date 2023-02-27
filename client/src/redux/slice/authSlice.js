@@ -43,11 +43,6 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logout = () => {
-  localStorage.removeItem("token");
-  reset();
-};
-
 // Get user from local storage
 const user = localStorage.getItem("token");
 const initialState = {

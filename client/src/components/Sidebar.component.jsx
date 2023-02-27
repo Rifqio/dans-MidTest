@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../redux/slice/authSlice";
+import { reset } from "../redux/slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getMe } from "../redux/slice/profileSlice";
@@ -35,8 +35,11 @@ function SidebarComponent() {
   useEffect(() => {
     dispatch(getMe());
   }, []);
+  
   const handleLogout = () => {
-    dispatch(logout());
+    localStorage.removeItem("token");
+    dispatch(reset());
+    navigate('/login')
   };
   return (
     <>
